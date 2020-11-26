@@ -1,0 +1,34 @@
+<html>
+
+<body>
+    <label for="message">Message:</label>
+
+    <input type="text" id="message" name="message" size="20">
+    <button id="clickme">click here to send message</button>
+    <div id="chat">
+        <div id="resultlist"></div>
+    </div>
+    <script>
+        document.getElementById("message")
+            .addEventListener("keyup", function (event) {
+                event.preventDefault();
+                if (event.keyCode === 13) {
+                    document.getElementById("clickme").click();
+                }
+            });
+
+        document.querySelector("#clickme").addEventListener("click", (event) => {
+            var message = document.querySelector("#message").value;
+            document.getElementById("message").value = "";
+            fetch(`/speak?${message.replace(/\s/g, "+")}`, { method: "post", body: "" })
+        })
+        var es = new EventSource('/listen');
+        es.onmessage = function (event) {
+            let d = document.createElement("div")
+            d.appendChild(document.createTextNode(event.data))
+            document.querySelector("#resultlist").appendChild(d)
+        };
+    </script>
+</body>
+
+</html>
