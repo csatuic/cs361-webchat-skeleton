@@ -181,12 +181,12 @@ void check_clients(pool *p) {
   int i, j, connfd, n, offset;
   char *end_of_uri;
   char *uri_ptr;
-  char buf[MAXLINE];
-  recv_buffer *ps;
+  char buf[4096];
+  recv_buffer *rb;
 
   for (i = 0; (i <= p->maxi) && (p->nready > 0); i++) {
     connfd = p->clientfd[i];
-    ps = &p->protos[i];
+    rb = &p->protos[i];
     offset = p->protos[i].first_empty_byte;
 
     if ((connfd > 0) && (FD_ISSET(connfd, &p->ready_set))) {
@@ -201,7 +201,7 @@ void check_clients(pool *p) {
 
       // TODO: based on the bytes received, move the protocol forward and
       // potentially send some bytes back to the client(s).
-      switch (parse_request(ps)) {
+      switch (parse_request(rb)) {
         case incomplete:
           break;
         case root:
