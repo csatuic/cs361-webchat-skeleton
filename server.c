@@ -1,7 +1,8 @@
 
 #include "csapp.h"
 
-const char OK[] = "HTTP/1.1 200 OK\r\nContent-type: text/html; charset=UTF-8\r\n\r\n";
+const char OK[] =
+    "HTTP/1.1 200 OK\r\nContent-type: text/html; charset=UTF-8\r\n\r\n";
 
 const char NOTOK[] = "HTTP/1.1 400 Bad Request\r\n\r\n";
 
@@ -209,8 +210,8 @@ void check_clients(pool *p) {
           // valid HTTP response along with the content of the index file.
           break;
         case speak:
-          // The server needs to respond with an OK message, and send this message
-          // to every currently listening client.
+          // The server needs to respond with an OK message, and send this
+          // message to every currently listening client.
           break;
         case sse_listen:
           // Don't forget to add this socket to the "listening sockets that
@@ -224,3 +225,4 @@ void check_clients(pool *p) {
       }
     }
   }
+}
