@@ -118,7 +118,7 @@ int main(int argc, char **argv) {
   }
   // read index into memory once to send to everyone
   filefd = open("index.html", O_RDONLY);
-  read(filefd, indexhtml, 8192);
+  read(filefd, indexhtml, 4096);
   close(filefd);
 
   port = atoi(argv[1]);
@@ -164,7 +164,7 @@ void add_client(int connfd, pool *p) {
       /* Add the descriptor to descriptor set */
       FD_SET(connfd, &p->read_set);
       // wipe buffer and indicate it is empty
-      memset(p->protos[i].requestbuf, 0, 8192);
+      memset(p->protos[i].requestbuf, 0, 4096);
       p->protos[i].first_empty_byte = 0;
       // set state for stateful connections
       p->receiving_events[i] = 0;
